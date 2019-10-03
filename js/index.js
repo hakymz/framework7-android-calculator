@@ -3,20 +3,36 @@ function calculate() {
   let currentInputs = document.getElementById("inputs").innerText.split("");
   let evalInputs = "";
   let answer = document.getElementById("answer");
+  let operator = false;
 
   for (i = 0; i < currentInputs.length; i++) {
     if (currentInputs[i] == "x") {
       evalInputs += "*";
+      operator = true;
     } else if (currentInputs[i] == "÷") {
       evalInputs += "/";
+      operator = true;
+    } else if (currentInputs[i] == "+") {
+      operator = true;
+    } else if (currentInputs[i] == "-") {
+      operator = true;
     } else {
       evalInputs += currentInputs[i];
     }
   }
 
-  if (evalInputs == 0) {
+  let lastChar = currentInputs.pop();
+  if (evalInputs == 0 || operator == false) {
     answer.innerText = "";
-  } else {
+  } else if (
+    //check for the last character
+    lastChar != "+" &&
+    lastChar != "÷" &&
+    lastChar != "x" &&
+    lastChar != "-" &&
+    operator
+  ) {
+    console.log(evalInputs);
     answer.innerText = eval(evalInputs);
   }
 }
@@ -81,15 +97,15 @@ function deleteInputs() {
   ];
   let numCol = document.getElementById("numCol");
   for (i = 0; i < numbers.length; i++) {
-    numCol.innerHTML += `<div class="row" style="color:#fff; text-align:center; height: 25%; font-size: 30px" id=numRow${i}> </div>`;
+    numCol.innerHTML += `<div class="row" style="color:#fff; text-align:center; height: 25%;" id="numRow${i}"> </div>`;
 
     for (j = 0; j < numbers[i].length; j++) {
       document.getElementById(
         `numRow${i}`
       ).innerHTML += `<div class="col" style="background: #3c4043;">
-      <div class="card ripple no-shadow" style="background: #3c4043;" onclick="buttonPressed('${numbers[i][j]}')">
+      <span class="link" style="margin:20px; font-size: 30px;" onclick="buttonPressed('${numbers[i][j]}')">
             ${numbers[i][j]}
-          </div>
+          </span>
         </div>`;
     }
   }
@@ -102,7 +118,7 @@ function deleteInputs() {
   for (i = 0; i < operators.length; i++) {
     operatorCol.innerHTML += ` <div class="row" style="color:#fff ; text-align:center; height: 20%; font-size: 20px"> 
     <div class="col" style="background: #5f6368;">
-      <div class="card no-shadow" style="background: #5f6368;" onclick="buttonPressed('${operators[i]}')"> ${operators[i]}
-     </div></div>`;
+      <span class="link" style="margin:20px;" onclick="buttonPressed('${operators[i]}')"> ${operators[i]}
+     </span></div>`;
   }
 })();
