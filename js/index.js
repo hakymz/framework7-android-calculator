@@ -50,7 +50,7 @@ function displayInput(input) {
 function buttonPressed(input) {
   let currentInputs = document.getElementById("inputs");
   if (input == "+" || input == "x" || input == "÷" || input == "-") {
-    //check if the was an operator
+    //check if the was an operator and update with the new operator
     if (
       currentInputs.innerText.split("").pop() == "+" ||
       currentInputs.innerText.split("").pop() == "x" ||
@@ -77,12 +77,12 @@ function buttonPressed(input) {
 //delete inputs
 function deleteInputs() {
   let currentInputs = document.getElementById("inputs");
-  let totalInputs = currentInputs.innerText.split("");
-  totalInputs.pop();
-  totalInputs = totalInputs.join("");
+  let newInputs = currentInputs.innerText.split("");
+  newInputs.pop();
+  newInputs = totalInputs.join("");
   //check empty input
-  if (totalInputs == "") {
-    totalInputs = 0;
+  if (newInputs == "") {
+    newInputs = 0;
   }
   currentInputs.innerText = totalInputs;
 }
