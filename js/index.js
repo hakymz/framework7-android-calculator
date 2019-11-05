@@ -1,124 +1,124 @@
-//calculate
-function calculate() {
-  let currentInputs = document.getElementById("inputs").innerText.split("");
-  let evalInputs = "";
-  let answer = document.getElementById("answer");
-  let operator = false;
+function displayInput(input) {
+  let currentInputs = document.getElementById("inputs");
+  if (input == "+" || input == "-" || input == "x" || input == "÷") {
+    if (
+      currentInputs.innerText.split("").pop() == "+" ||
+      currentInputs.innerText.split("").pop() == "-" ||
+      currentInputs.innerText.split("").pop() == "x" ||
+      currentInputs.innerText.split("").pop() == "÷"
+    ) {
+      let newInputs = currentInputs.innerText.split("");
+      newInputs.pop();
+      newInputs = newInputs.join("") + input;
+      currentInputs.innerText = newInputs;
+    } else if (currentInputs.innerText != "0") {
+      currentInputs.innerText += input;
+    }
+  } else {
+    if (currentInputs.innerText == "0" && currentInputs.innerText.length == 1) {
+      currentInputs.innerText = "";
+    }
+    currentInputs.innerText += input;
+  }
+}
 
+function calculate() {
+  let currentInputs = document.getElementById("inputs").innerText;
+  let answer = document.getElementById("answer");
+  let evalInputs = "";
+  let operator = false;
   for (i = 0; i < currentInputs.length; i++) {
     if (currentInputs[i] == "x") {
       evalInputs += "*";
-      operator = true;
     } else if (currentInputs[i] == "÷") {
       evalInputs += "/";
-      operator = true;
-    } else if (currentInputs[i] == "+") {
-      operator = true;
-    } else if (currentInputs[i] == "-") {
-      operator = true;
     } else {
       evalInputs += currentInputs[i];
     }
+
+    if (
+      currentInputs[i] == "x" ||
+      currentInputs[i] == "-" ||
+      currentInputs[i] == "÷" ||
+      currentInputs[i] == "+"
+    ) {
+      operator = true;
+    }
   }
 
-  let lastChar = currentInputs.pop();
-  if (evalInputs == 0 || operator == false) {
+  let lastChar = currentInputs.split("").pop();
+  if (evalInputs == "0" || operator == false) {
     answer.innerText = "";
   } else if (
-    //check for the last character
+    lastChar != "x" &&
     lastChar != "+" &&
     lastChar != "÷" &&
-    lastChar != "x" &&
     lastChar != "-" &&
     operator
   ) {
-    console.log(evalInputs);
     answer.innerText = eval(evalInputs);
   }
 }
-
-//display input
-function displayInput(input) {
-  let currentInputs = document.getElementById("inputs");
-  //check for zero
-  if (inputs.innerText.length == 1 && inputs.innerText == 0) {
-    inputs.innerText = "";
-  }
-  currentInputs.innerText += input;
-}
-
 function buttonPressed(input) {
-  let currentInputs = document.getElementById("inputs");
-  if (input == "+" || input == "x" || input == "÷" || input == "-") {
-    //check if the was an operator and update with the new operator
-    if (
-      currentInputs.innerText.split("").pop() == "+" ||
-      currentInputs.innerText.split("").pop() == "x" ||
-      currentInputs.innerText.split("").pop() == "÷" ||
-      currentInputs.innerText.split("").pop() == "-"
-    ) {
-      let newInput = currentInputs.innerText.split("");
-      newInput.pop();
-      newInput = newInput.join("") + input;
-      currentInputs.innerText = newInput;
-    } else if (currentInputs.innerText != "0") {
-      displayInput(input);
-    }
-  } else if (input == "=") {
+  if (input == "=") {
     calculate();
   } else if (input == "DEL") {
     deleteInputs();
-    calculate();
   } else {
     displayInput(input);
   }
 }
 
-//delete inputs
 function deleteInputs() {
   let currentInputs = document.getElementById("inputs");
   let newInputs = currentInputs.innerText.split("");
   newInputs.pop();
-  newInputs = totalInputs.join("");
-  //check empty input
+  newInputs = newInputs.join("");
   if (newInputs == "") {
-    newInputs = 0;
+    newInputs = "0";
   }
-  currentInputs.innerText = totalInputs;
+  currentInputs.innerText = newInputs;
+  calculate();
 }
 
-//add numbers and symbols
-(function() {
+//add numbers and operators to the dom
+function addNumbers() {
+  let numCol = document.getElementById("numCol");
   let numbers = [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
     ["7", "8", "9"],
+    ["4", "5", "6"],
+    ["1", "2", "3"],
     [".", "0", "="]
   ];
-  let numCol = document.getElementById("numCol");
-  for (i = 0; i < numbers.length; i++) {
-    numCol.innerHTML += `<div class="row" style="color:#fff; text-align:center; height: 25%;" id="numRow${i}"> </div>`;
+  for (let i = 0; i < numbers.length; i++) {
+    numCol.innerHTML += `<div class="row"
+      style="height: 25%; color: white; text-align: center;" id="numRows${i}"
+    ></div>`;
 
-    for (j = 0; j < numbers[i].length; j++) {
-      document.getElementById(
-        `numRow${i}`
-      ).innerHTML += `<div class="col" style="background: #3c4043;">
-      <span class="link" style="margin:20px; font-size: 30px;" onclick="buttonPressed('${numbers[i][j]}')">
-            ${numbers[i][j]}
-          </span>
-        </div>`;
+    for (let j = 0; j < numbers[i].length; j++) {
+      document.getElementById("numRows" + i).innerHTML += `<div class="col">
+      <span class="link" style="font-size: 30px; margin:20px;"
+      onclick="buttonPressed('${numbers[i][j]}')"
+        >${numbers[i][j]}</span
+      >
+    </div>`;
     }
   }
-})();
 
-//add operators
-(function() {
   let operators = ["DEL", "÷", "x", "-", "+"];
   let operatorCol = document.getElementById("operatorCol");
-  for (i = 0; i < operators.length; i++) {
-    operatorCol.innerHTML += ` <div class="row" style="color:#fff ; text-align:center; height: 20%; font-size: 20px"> 
-    <div class="col" style="background: #5f6368;">
-      <span class="link" style="margin:20px;" onclick="buttonPressed('${operators[i]}')"> ${operators[i]}
-     </span></div>`;
+  for (let i = 0; i < operators.length; i++) {
+    operatorCol.innerHTML += `<div class="row"
+       style="height: 20%; color: white; text-align: center;" id="numRows${i}"
+     >
+     <div class="col">
+      <span class="link" style="font-size: 20px; margin:20px;"
+      onclick="buttonPressed('${operators[i]}')"
+        >${operators[i]}</span
+      >
+    </div>
+     </div>`;
   }
-})();
+}
+
+addNumbers();
