@@ -18,7 +18,7 @@
       content="default-src * 'self'
       'unsafe-inline' 'unsafe-eval' data: gap:"
     />
-    <title>Framework7</title>
+    <title>Javascript calculator</title>
     <link rel="stylesheet" href="packages/core/css/framework7.bundle.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -28,16 +28,14 @@
   <body>
     <div id="app">
       <div class="view view-main">
-        <div class="page" style="background: #fff;">
+        <div class="page">
           <div class="page-content">
-            <div class="row no-gap" style="height: 35%">
+            <div class="row" style="height: 40%">
               <div class="col">
                 <div class="row">
                   <div class="col">
                     <div class="block">
-                      <span
-                        style="font-size: 60px; float: right; outline: none"
-                        id="inputs"
+                      <span style="font-size: 60px; float:right;" id="inputs"
                         >0</span
                       >
                     </div>
@@ -47,7 +45,7 @@
                   <div class="col">
                     <div class="block">
                       <span
-                        style="font-size: 30px; float: right; outline: none"
+                        style="font-size: 30px; float:right; color:grey;"
                         id="answer"
                       ></span>
                     </div>
@@ -55,15 +53,15 @@
                 </div>
               </div>
             </div>
-            <div class="row no-gap" style="height: 65%">
+            <div class="row no-gap" style="height: 60%;">
               <div
                 class="col-65"
-                style="background: #3c4043; height: 100%; padding-top: 20px"
                 id="numCol"
+                style="background: #3c4043; height: 100%; padding-top:20px"
               ></div>
               <div
                 class="col-25"
-                style="background: #5f6368; height: 100%; padding-top: 20px"
+                style="background: #5f6368; height: 100%; padding-top:20px"
                 id="operatorCol"
               ></div>
               <div
